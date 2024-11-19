@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Expenses</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="bg-gray-900 text-gray-200 min-h-screen p-6">
+
+    <div class="max-w-3xl mx-auto bg-gray-800 shadow-lg rounded-lg p-6">
+        
+        <% if(recentExpenses.length === 0) { %>
+            <div class="text-center py-8">
+                <ul>
+                    <li class="text-gray-400 italic">It's a ghost town here...</li>
+                </ul>
+            </div>
+        <% } else { %>
+            <h1 class="text-2xl font-bold text-gray-100 mb-6">All Transactions from <%= formattedDate %> - Present</h1>
+            <ul class="space-y-4">
+                <% recentExpenses.forEach(expense => { %>
+                    <li class="bg-gray-700 p-4 rounded-lg flex justify-between items-center shadow-sm">
+                        <div>
+                            <strong class="block text-lg font-semibold text-gray-200"><%= expense.description %></strong>
+                            <div class="text-gray-400">
+                                <span   class="block text-red-400">$<%= expense.amount %></span>
+                                <span class="block"><%= expense.category %></span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <i class="fas fa-edit text-blue-400 cursor-pointer hover:text-blue-600"></i>
+                            <i class="fa-solid fa-trash text-red-400 cursor-pointer hover:text-red-600" id="<%= expense._id %>"></i>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="/" class="text-blue-400 hover:text-blue-600">&lt; Back</a>
+    </div>
+
+    <script>
+        const trash = document.getElementsByClassName('fa-trash');
+        const edit = document.getElementsByClassName('fa-edit');
+
+        Array.from(trash).forEach(e => {
+            e.addEventListener('click', DEL);
+        });
+
+        function DEL(e) {
+            const expenseID = e.target.id;
+
+            fetch(`/expense/delete/${expenseID}`, {
+                method: "DELETE",
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Error deleting expense');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
