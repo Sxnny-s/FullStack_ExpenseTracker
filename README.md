@@ -48,7 +48,7 @@ Before you begin, ensure you have the following installed:
       3b. Add your MongoDB connection string and other environment variables:
     
    ```env
-   DB_URI=your_mongodb_connection_string
+   url=your_mongodb_connection_string
    SECRET_KEY=your_secret_key
 
 
