@@ -29,6 +29,10 @@ Before you begin, ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v16 or higher)
 - [MongoDB](https://www.mongodb.com/) (or use MongoDB Atlas for cloud database)
 
+### SCREENSHOTS
+  <img width="1095" alt="image" src="https://github.com/user-attachments/assets/2e839d8d-7aac-499e-91cc-1374015aa0c2">
+
+
 ### Steps to Install
 
 1. **Clone the repository**:
